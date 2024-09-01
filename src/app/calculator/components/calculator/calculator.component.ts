@@ -41,7 +41,8 @@ export class CalculatorComponent {
 
     const key = event.key;
     const keyValue = keyEquivalents[key] ?? key;
-
+    
+    console.log(keyValue);
     this.handleClick(keyValue);
 
     this.calculatorButtons().forEach((button) => {

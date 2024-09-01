@@ -8,8 +8,8 @@ const specialOperators = ['+/-', '%', '.', '=', 'C', 'Backspace'];
   providedIn: 'root',
 })
 export class CalculatorService {
-  public resultText = signal<string>('10');
-  public subResultText = signal<string>('20');
+  public resultText = signal<string>('0');
+  public subResultText = signal<string>('0');
   public lastOperator = signal<string>('+');
 
   public constructNumber(value: string) {
@@ -31,19 +31,18 @@ export class CalculatorService {
     }
 
     //Backspace
-    if ((value = 'Backspace')) {
+    if (value === 'Backspace') {
       if (this.resultText() === '0') return;
 
-      if (this.resultText().length === 2 && this.resultText().includes('-')) {
+      if (this.resultText().includes('-') && this.resultText().length === 2) {
         this.resultText.set('0');
         return;
       }
 
-      if (this.resultText().length === 1) {
+      if (this.resultText().length === 1 || this.resultText().length === 0) {
         this.resultText.set('0');
+        return;
       }
-      /* if (this.resultText().length > 1) {
-      } */
 
       this.resultText.update((v) => v.slice(0, -1));
 
@@ -94,7 +93,7 @@ export class CalculatorService {
       return;
     }
 
-    //Numeros
+    //Numeros    
     if (numbers.includes(value)) {
       if (this.resultText() === '0' || this.resultText() === '-0') {
         if (this.resultText().includes('-')) {
@@ -105,7 +104,7 @@ export class CalculatorService {
         return;
       }
 
-      this.resultText.update((text) => text + value);
+      this.resultText.update((text) => text + value);      
       return;
     }
   }
@@ -136,7 +135,6 @@ export class CalculatorService {
       default:
         break;
     }
-
     this.resultText.set(result.toString());
     this.subResultText.set('0');
     this.lastOperator.set('+');
