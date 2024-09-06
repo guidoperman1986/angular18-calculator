@@ -44,7 +44,7 @@ export class CalculatorButtonComponent {
   } */
 
   handleClick() {
-    if (!this.contentValue()?.nativeElement.innerText) return;
+    if (!this.contentValue()?.nativeElement) return;
 
     const value = this.contentValue()!.nativeElement.innerText;
 
